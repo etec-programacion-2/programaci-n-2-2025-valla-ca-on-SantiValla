@@ -10,4 +10,24 @@ data class Vector(
     var y: Double
        get() = _y
        set(value) {_y = value }
-}
+      
+    operator fun plus(otro: Vector): Vector {
+        val sumx = this.x + otro.x
+        val sumy = this.y + otro.y
+        val resultado = Vector(sumx, sumy)
+        return resultado 
+    } 
+    operator fun minus(otro: Vector): Vector {
+        val resx = this.x - otro.x
+        val resy = this.y - otro.y
+        val resultado = Vector(resx, resy)
+        return resultado 
+    } 
+    operator fun times(otro: Vector): Vector {
+        val mulx = this.x * otro.x
+        val muly = this.y * otro.y
+        val resultado = Vector(mulx, muly)
+        return resultado 
+    } 
+} 
+    
