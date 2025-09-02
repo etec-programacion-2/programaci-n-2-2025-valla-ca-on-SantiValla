@@ -11,5 +11,21 @@ data class Rectangulo(
        get() = _tamaño
        set(value) {_tamaño = value }
        
-     private fun intersecta(otro: Rectangulo) 
+     
+      fun intersecta(otro: Rectangulo): Boolean {
+        val thisIzq = posicion.x
+        val thisDer = posicion.x + tamaño.x
+        val thisArriba = posicion.y
+        val thisAbajo = posicion.y + tamaño.y
+
+        val otherIzq = otro.posicion.x
+        val otherDer = otro.posicion.x + otro.tamaño.x
+        val otherArriba = otro.posicion.y
+        val otherAbajo = otro.posicion.y + otro.tamaño.y
+
+        return (thisIzq < otherDer &&
+                thisDer > otherIzq &&
+                thisArriba < otherAbajo &&
+                thisAbajo > otherArriba)
+     }
        }

@@ -10,7 +10,7 @@ data class Vector(
     var y: Double
        get() = _y
        set(value) {_y = value }
-      
+      //con la sobrecarga de operadores simplificamos el codigo de fisica al ayudarme a escribir las operaciones de forma natural
     operator fun plus(otro: Vector): Vector {
         val sumx = this.x + otro.x
         val sumy = this.y + otro.y
