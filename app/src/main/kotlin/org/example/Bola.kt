@@ -5,4 +5,5 @@ class Bola(
     var velocidad: Vector
        get() = _velocidad
        set(value) { _velocidad = value }
+
 }
