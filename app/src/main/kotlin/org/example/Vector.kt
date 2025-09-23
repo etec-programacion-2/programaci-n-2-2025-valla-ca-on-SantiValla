@@ -23,11 +23,15 @@ data class Vector(
         val resultado = Vector(resx, resy)
         return resultado 
     } 
-    operator fun times(otro: Vector): Vector {
-        val mulx = this.x * otro.x
-        val muly = this.y * otro.y
+    operator fun times(escalar: Double): Vector {
+        val mulx = this.x * escalar
+        val muly = this.y * escalar
         val resultado = Vector(mulx, muly)
+        return resultado }
+    operator fun div(escalar: Double): Vector {
+        val divx = this.x / escalar
+        val divy = this.y / escalar
+        val resultado = Vector(divx, divy)
         return resultado 
     } 
 } 
-    
