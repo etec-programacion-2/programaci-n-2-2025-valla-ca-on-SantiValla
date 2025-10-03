@@ -2,12 +2,12 @@ package org.example
 class Canon(
     val cuerpo: Rectangulo,
      private var _angulo : Double
-): ElementoDeJuego() {
+): ElementoDeJuego(cuerpo) {
     var angulo: Double
        get() = _angulo
        set(value) { _angulo = ((value % 360) + 360) % 360 }
 
-       fun apuntar(nuevoAngulo: Double): {
+       fun apuntar(nuevoAngulo: Double) {
             this.angulo = nuevoAngulo
        }
 

@@ -1,4 +1,5 @@
 package org.example
-class Objetivo: ElementoDeJuego() {
+class Objetivo(area: Rectangulo): ElementoDeJuego(area) {
+    
     
 }
