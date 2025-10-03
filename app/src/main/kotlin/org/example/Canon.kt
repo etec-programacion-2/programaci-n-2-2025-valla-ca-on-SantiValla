@@ -22,7 +22,8 @@ class Canon(
         )
 
         val velocidadInicial = direccion * 5.0 //la potencia con la que la bola saldrá disparada será un valor constante, en este caso 5
-        return Bola(bocaCanon, velocidadInicial)
+        val tamañoBola: Vector = Vector(1.0, 1.0)
+        return Bola(bocaCanon, tamañoBola, velocidadInicial)
            
      }
 }

@@ -1,5 +1,5 @@
 package org.example
-class MotorDeFisica:  {
+class MotorDeFisica  {
 fun detectarColisiones(bola: Bola, elementos: List<ElementoDeJuego>): ElementoDeJuego? {
     for (e in elementos) {
         if (e === bola) continue

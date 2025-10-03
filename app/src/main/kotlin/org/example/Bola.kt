@@ -1,7 +1,7 @@
 package org.example
 class Bola(
     posicion: Vector,
-    tamaño: Vector = Vector(1.0, 1.0),
+    
     private var _velocidad : Vector
 ): ElementoDeJuego(Rectangulo(posicion, tamaño)) {
     var velocidad: Vector
