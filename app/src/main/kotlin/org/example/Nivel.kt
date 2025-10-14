@@ -15,4 +15,5 @@ private var _limiteDeBolas: Int) {
     var limiteDeBolas: Int
         get() = _limiteDeBolas
         set(value) { _limiteDeBolas = value }
+    
 }
