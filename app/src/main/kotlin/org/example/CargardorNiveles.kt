@@ -1,4 +1,4 @@
-package.org example
+package org.example
 object CargadorNiveles(){
     fun cargarNiveles(): List<Nivel> {
         val niveles = mutableListOf<Nivel>()
