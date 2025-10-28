@@ -1,3 +1,4 @@
+package org.example
 class Obstaculo(
     area: Rectangulo,
     private var _tipo: TipoObstaculo

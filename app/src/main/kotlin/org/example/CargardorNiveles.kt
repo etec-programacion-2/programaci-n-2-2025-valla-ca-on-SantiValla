@@ -1,5 +1,5 @@
 package org.example
-object CargadorNiveles(){
+object CargadorNiveles{
     fun cargarNiveles(): List<Nivel> {
         val niveles = mutableListOf<Nivel>()
 
