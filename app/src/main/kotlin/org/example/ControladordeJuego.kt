@@ -2,14 +2,13 @@ package org.example
 
 class ControladorDeJuego(
     private val niveles: List<Nivel>,
-    private val canon: Canon
+    private val canon: Canon,
+    private val renderer: Renderer   // 👈 nuevo parámetro: el renderizador (abstracción)
 ) {
     private var indiceNivel = 0
     private var estado = EstadoJuego.JUGANDO
     private var bolasRestantes = niveles[indiceNivel].limiteDeBolas
     private val motorFisica = MotorDeFisica()
-
-    // lista con bolas en juego
     private val bolasEnJuego = mutableListOf<Bola>()
 
     private val nivelActual: Nivel
@@ -17,23 +16,22 @@ class ControladorDeJuego(
 
     fun estaJugando(): Boolean = estado == EstadoJuego.JUGANDO
 
-    // Disparar una bola desde el cañón
+    // Dispara una nueva bola desde el cañón
     fun dispararBola() {
         if (bolasRestantes > 0 && estado == EstadoJuego.JUGANDO) {
             val bola = canon.disparar()
             bolasEnJuego.add(bola)
-            bolasRestantes-- 
+            bolasRestantes--
         } else {
-            println("No quedan más bolas o el juego no está activo.")
+            println("⚠️ No quedan más bolas o el juego no está activo.")
         }
     }
 
-    // Bucle de actualización (física, colisiones, estados)
+    // Bucle de actualización del juego
     fun actualizar(deltaTiempo: Double) {
         if (estado != EstadoJuego.JUGANDO) return
 
-        // Actualizar física de todas las bolas
-        
+        // Actualizar posición de todas las bolas
         for (bola in bolasEnJuego) {
             bola.actualizar(deltaTiempo)
         }
@@ -42,52 +40,64 @@ class ControladorDeJuego(
         bolasEnJuego.removeIf { bola ->
             bola.area.posicion.y < 0
         }
-        val bolasAEliminar = mutableListOf<Bola>()
-        // Detectar colisiones
-        for (bola in bolasEnJuego.toList()) {
+
+        // 3️⃣ Detectar colisiones
+        for (bola in bolasEnJuego.toList()) { // usar copia para evitar modificar lista mientras se recorre
             val colision = motorFisica.detectarColisiones(bola, obtenerElementosDelNivel())
             if (colision != null) {
                 when (colision) {
                     is Objetivo -> {
-                        println("Objetivo alcanzado!")
                         nivelActual.objetivos = nivelActual.objetivos - colision
+                        bolasEnJuego.remove(bola)
+
                         if (nivelActual.objetivos.isEmpty()) {
-                            println("Nivel completado")
                             pasarAlSiguienteNivel()
                         }
                     }
                     is Obstaculo -> {
-                        println("Colisión con obstáculo tipo ${colision.tipo}")
-                        bolasAEliminar.add(bola)
+                        bolasEnJuego.remove(bola)
                     }
                 }
             }
         }
-        bolasEnJuego.removeAll(bolasAEliminar)
-        // Comprobar derrota (sin bolas ni objetivos completados)
+
+        // Comprobar derrota
         if (bolasRestantes == 0 && bolasEnJuego.isEmpty() && nivelActual.objetivos.isNotEmpty()) {
             estado = EstadoJuego.DERROTA
-            println(" Derrota. Fin del juego.")
+            println("Te has quedado sin bolas, fin del juego")
         }
+
+        // Dibujar el estado del juego 
+        renderer.dibujar(obtenerElementosParaRender())
     }
 
-    // Cambiar al siguiente nivel
+    // Cambiar de nivel
     private fun pasarAlSiguienteNivel() {
         indiceNivel++
         if (indiceNivel >= niveles.size) {
             estado = EstadoJuego.VICTORIA
-            println("Completaste todos los niveles!")
+            println("Has completado el juego")
         } else {
             bolasRestantes = niveles[indiceNivel].limiteDeBolas
-            println("Pasando al nivel ${indiceNivel + 1}")
+            println("🎉 Nivel ${indiceNivel + 1} iniciado.")
         }
     }
 
-    // Obtener todos los elementos del nivel actual
+    // Reunir todos los elementos del nivel actual
     private fun obtenerElementosDelNivel(): List<ElementoDeJuego> {
         val elementos = mutableListOf<ElementoDeJuego>()
         elementos.addAll(nivelActual.obstaculos)
         elementos.addAll(nivelActual.objetivos)
+        return elementos
+    }
+
+    // Reunir todos los elementos que se deben renderizar
+    private fun obtenerElementosParaRender(): List<ElementoDeJuego> {
+        val elementos = mutableListOf<ElementoDeJuego>()
+        elementos.addAll(nivelActual.obstaculos)
+        elementos.addAll(nivelActual.objetivos)
+        elementos.addAll(bolasEnJuego)
+        elementos.add(canon)
         return elementos
     }
 }
