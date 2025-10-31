@@ -23,7 +23,7 @@ class ControladorDeJuego(
             bolasEnJuego.add(bola)
             bolasRestantes--
         } else {
-            println("⚠️ No quedan más bolas o el juego no está activo.")
+            println(" No quedan más bolas o el juego no está activo.")
         }
     }
 
@@ -41,7 +41,7 @@ class ControladorDeJuego(
             bola.area.posicion.y < 0
         }
 
-        // 3️⃣ Detectar colisiones
+        //  Detectar colisiones
         for (bola in bolasEnJuego.toList()) { // usar copia para evitar modificar lista mientras se recorre
             val colision = motorFisica.detectarColisiones(bola, obtenerElementosDelNivel())
             if (colision != null) {
@@ -92,7 +92,7 @@ class ControladorDeJuego(
     }
 
     // Reunir todos los elementos que se deben renderizar
-    private fun obtenerElementosParaRender(): List<ElementoDeJuego> {
+    fun obtenerElementosParaRender(): List<ElementoDeJuego> { 
         val elementos = mutableListOf<ElementoDeJuego>()
         elementos.addAll(nivelActual.obstaculos)
         elementos.addAll(nivelActual.objetivos)
