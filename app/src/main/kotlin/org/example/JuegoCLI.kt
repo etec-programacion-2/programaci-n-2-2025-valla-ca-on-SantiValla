@@ -5,7 +5,7 @@ class JuegoCLI(
     private val alto: Int = 20
 ) {
     private val niveles = CargadorNiveles.cargarNiveles()
-    private val canon = Canon(Rectangulo(Vector(10.0, 5.0), Vector(2.0, 2.0)), 45.0)
+    private val canon = Canon(Rectangulo(Vector(0.0, 0.0), Vector(2.0, 2.0)), 45.0)
     private val renderer = RendererCLI(ancho, alto)
     private val controlador = ControladorDeJuego(niveles, canon, renderer)
     fun ejecutar() {
@@ -14,26 +14,29 @@ class JuegoCLI(
 
     var jugando = true
     while (jugando && controlador.estaJugando()) {
-        print("> ")
-        val comando = readLine()
+        // Dibujar el estado actual antes de pedir entrada
+        renderer.dibujar(controlador.obtenerElementosParaRender())
 
-        // Si no hay entrada (por ejemplo, cuando se ejecuta desde Gradle Run)
-        if (comando == null) {
-            println("\nNo se puede leer entrada interactiva. Terminando el juego...")
-            break
+        // Actualizar el juego
+        controlador.actualizar(0.1)
+
+        // Revisar si el juego terminó
+        if (!controlador.estaJugando()) {
+            break // termina el bucle si ya no está jugando
         }
 
-        when (comando.lowercase()) {
+        // Solicitar input del usuario
+        print("> ")
+        val comando = readLine()?.lowercase()
+
+        when (comando) {
             "disparar" -> {
                 controlador.dispararBola()
-                controlador.actualizar(0.1)
                 canon.apuntar((canon.angulo + 5) % 360)
             }
             "salir" -> jugando = false
             else -> println("Comando no reconocido. Usa 'disparar' o 'salir'.")
         }
-
-        renderer.dibujar(controlador.obtenerElementosParaRender())
     }
 
     println("Fin del juego.")

@@ -3,7 +3,7 @@ package org.example
 class ControladorDeJuego(
     private val niveles: List<Nivel>,
     private val canon: Canon,
-    private val renderer: Renderer   // 👈 nuevo parámetro: el renderizador (abstracción)
+    private val renderer: Renderer   
 ) {
     private var indiceNivel = 0
     private var estado = EstadoJuego.JUGANDO
@@ -21,7 +21,7 @@ class ControladorDeJuego(
         if (bolasRestantes > 0 && estado == EstadoJuego.JUGANDO) {
             val bola = canon.disparar()
             bolasEnJuego.add(bola)
-            bolasRestantes--
+            bolasRestantes-- 
         } else {
             println(" No quedan más bolas o el juego no está activo.")
         }
