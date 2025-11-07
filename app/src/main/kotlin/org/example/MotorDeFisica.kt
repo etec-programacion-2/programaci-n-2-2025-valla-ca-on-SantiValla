@@ -1,7 +1,8 @@
 package org.example
 class MotorDeFisica  {
 fun detectarColisiones(bola: Bola, elementos: List<ElementoDeJuego>): ElementoDeJuego? {
-    for (e in elementos) {
+    //e de elemento
+    for (e in elementos) { 
         if (e === bola) continue
         if (bola.area.intersecta(e.area)) {
                 return e

@@ -5,10 +5,10 @@ object CargadorNiveles{
 
         // Nivel 1
         val obstaculos1 = listOf(
-            Obstaculo(Rectangulo(Vector(25.0, 10.0), Vector(20.0, 20.0)), TipoObstaculo.ESTATICO)
+            Obstaculo(Rectangulo(Vector(300.0, 130.0), Vector(20.0, 200.0)), TipoObstaculo.ESTATICO)
         )
         val objetivos1 = listOf(
-            Objetivo(Rectangulo(Vector(10.0, 15.0), Vector(20.0, 20.0)))
+            Objetivo(Rectangulo(Vector(620.0, 400.0), Vector(20.0, 20.0)))
         )
         niveles.add(Nivel(obstaculos1, objetivos1, 5))
 

@@ -8,8 +8,9 @@ class JuegoSwing(
     private val alto: Int = 600
 ) {
     private val niveles = CargadorNiveles.cargarNiveles()
-    private val canon = Canon(Rectangulo(Vector(10.0, 5.0), Vector(20.0, 20.0)), 45.0)
+    private val canon = Canon(Rectangulo(Vector(30.0, 5.0), Vector(50.0, 20.0)), 45.0)
     private val renderer = RendererSwing(ancho, alto)
+    private val indicador = IndicadorDeApuntado(canon)
     private val controlador = ControladorDeJuego(niveles, canon, renderer)
 
     fun ejecutar() {
@@ -29,6 +30,7 @@ class JuegoSwing(
             while (controlador.estaJugando() && tiempo < 30.0) {
                 controlador.actualizar(0.1)
                 Thread.sleep(50)
+                canon.apuntar((canon.angulo + 5) % 360)
                 tiempo += 0.05
             }
         }.start()
