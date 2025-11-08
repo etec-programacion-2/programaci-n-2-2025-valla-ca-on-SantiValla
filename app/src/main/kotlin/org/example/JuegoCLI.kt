@@ -7,7 +7,7 @@ class JuegoCLI(
     private val niveles = CargadorNiveles.cargarNiveles()
     private val canon = Canon(Rectangulo(Vector(0.0, 0.0), Vector(2.0, 2.0)), 45.0)
     private val renderer = RendererCLI(ancho, alto)
-    private val controlador = ControladorDeJuego(niveles, canon, renderer)
+    private val controlador = ControladorDeJuego(niveles, canon, renderer, ancho, alto)
     fun ejecutar() {
     println("=== Juego iniciado ===")
     println("Comandos disponibles: 'disparar' para lanzar, 'salir' para terminar.\n")
