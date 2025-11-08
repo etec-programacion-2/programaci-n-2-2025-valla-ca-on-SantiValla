@@ -10,11 +10,10 @@ import javax.swing.JPanel
 class RendererSwing(
     private val ancho: Int,  // ancho de la ventana
     private val alto: Int,   // alto de la ventana
-    private val indicador: IndicadorDeApuntado? = null // indicador opcional
 ) : Renderer {
 
     // Ventana principal del juego (pública para acceder desde JuegoSwing)
-    val frame = JFrame("Juego - Swing")
+    val frame = JFrame("CannonShooting2D")
 
     // Panel encargado de dibujar los elementos
     private val panel = object : JPanel() {
@@ -31,26 +30,62 @@ class RendererSwing(
 
             // Dibujar cada elemento del juego
             for (e in elementos) {
-                val x = e.area.posicion.x.toInt()
-                val y = alto - e.area.posicion.y.toInt() // invertir eje Y
-                val w = e.area.tamaño.x.toInt()
-                val h = e.area.tamaño.y.toInt()
+            val x = e.area.posicion.x.toInt()
+            val y = alto - e.area.posicion.y.toInt()
+            val w = e.area.tamaño.x.toInt() //w de width (ancho en inglés)
+            val h = e.area.tamaño.y.toInt() //h de height (alto en inglés)
 
-                // Elegir color según el tipo de elemento
-                g2.color = when (e) {
-                    is Canon -> Color.RED
-                    is Bola -> Color.YELLOW
-                    is Objetivo -> Color.GREEN
-                    is Obstaculo -> Color.GRAY
-                    else -> Color.WHITE
+            when (e) {
+                is Canon -> {
+                g.color = Color.RED
+
+                // Guardamos la posicion inicial
+                val posicioninicial = g2.transform
+
+                // Calculamos el ángulo en radianes
+                val anguloRad = Math.toRadians(e.angulo)
+
+                // Rotamos el contexto alrededor del origen del cañón
+                g2.rotate(-anguloRad, x.toDouble(), y.toDouble())
+
+                // Dibujamos el cañón como un rectángulo
+                g2.fillRect(x, y - h, w, h)
+
+                // Restauramos la posicion inicial
+                g2.transform = posicioninicial
+
+                // Dibujar la rueda del cañón
+                val radioRueda = (h * 0.8).toInt()
+                val ruedaX = x - radioRueda / 2
+                val ruedaY = y - radioRueda / 2
+
+                g2.color = Color.DARK_GRAY
+                g2.fillOval(ruedaX, ruedaY, radioRueda, radioRueda)
                 }
 
-                // Dibujar el elemento
-                g2.fillRect(x, y - h, w, h)
+                is Bola -> {
+                g.color = Color.YELLOW
+                g.fillOval(x, y - h, w, h)
             }
 
-            // Dibujar el indicador de apuntado (si existe)
-            indicador?.dibujar(g2, alto)
+            is Objetivo -> {
+                g.color = Color.GREEN
+                g.fillRect(x, y - h, w, h)
+            }
+
+            is Obstaculo -> {
+                g.color = Color.GRAY
+                g.fillRect(x, y - h, w, h)
+            }
+
+            else -> {
+                g.color = Color.WHITE
+                g.fillRect(x, y - h, w, h)
+            }
+        }
+    }
+
+           
         }
     }
 

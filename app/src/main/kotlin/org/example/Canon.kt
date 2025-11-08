@@ -5,14 +5,14 @@ class Canon(
 ): ElementoDeJuego(cuerpo) {
     var angulo: Double
     get() = _angulo
-    set(value) { _angulo = ((value % 360) + 360) % 360 }
+    set(value) { _angulo = value.coerceIn(0.0, 90.0) }
 
     fun apuntar(nuevoAngulo: Double) {
         this.angulo = nuevoAngulo
     }
     
     fun disparar(): Bola {
-        val rad = Math.toRadians(angulo) //el valor de angulo pasar a estar expresado en grados
+        val rad = Math.toRadians(angulo) //el valor de angulo pasa a estar expresado en grados
         val direccion = Vector(Math.cos(rad), Math.sin(rad)) //el coseno del angulo con el que estamos apuntando define la posicion de la bola en el eje x, mientras que el seno hace lo mismo en el eje y
 
         // centro superior del cañón
