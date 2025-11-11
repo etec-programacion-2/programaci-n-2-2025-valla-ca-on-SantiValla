@@ -8,7 +8,8 @@ object CargadorNiveles{
             Obstaculo(Rectangulo(Vector(300.0, 130.0), Vector(20.0, 200.0)), TipoObstaculo.ESTATICO)
         )
         val objetivos1 = listOf(
-            Objetivo(Rectangulo(Vector(620.0, 405.0), Vector(20.0, 20.0)))
+            Objetivo(Rectangulo(Vector(620.0, 405.0), Vector(20.0, 20.0))),
+            Objetivo(Rectangulo(Vector(620.0, 105.0), Vector(20.0, 20.0)))
         )
         niveles.add(Nivel(obstaculos1, objetivos1, 5))
 

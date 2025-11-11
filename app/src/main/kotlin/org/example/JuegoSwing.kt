@@ -18,7 +18,7 @@ class JuegoSwing(
             override fun keyPressed(e: KeyEvent) {
                 if (controlador.estaJugando()) {
                     when (e.keyCode) {
-                        KeyEvent.VK_SPACE -> controlador.dispararBola()
+                        KeyEvent.VK_SPACE -> controlador.dispararBola() 
                         KeyEvent.VK_ESCAPE -> cerrar()
                     }
                 } else {
@@ -50,7 +50,7 @@ class JuegoSwing(
                         else -> {}
                     }
 
-                    // 🔹 Esperamos un instante y luego salimos del bucle
+                    // Esperamos un instante y luego salimos del bucle
                     Thread.sleep(2000)
                     corriendo = false
                 }

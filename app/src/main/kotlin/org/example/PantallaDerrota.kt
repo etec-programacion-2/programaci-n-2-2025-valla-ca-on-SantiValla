@@ -11,7 +11,7 @@ class PantallaDerrota : PantallaFinal {
 
         g.font = Font("Arial", Font.PLAIN, 24)
         
-        g.drawString("Presiona ESC para salir", 260, 360)
+        g.drawString("Presiona ESC para salir", 230, 360)
     }
 
     override fun manejarEntrada(tecla: Int, juego: JuegoSwing) {
